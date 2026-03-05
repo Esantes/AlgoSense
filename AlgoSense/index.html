@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgoSense — Análise de Algoritmos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3b"></div>
+
+<div id="toast">
+  <div class="spin" id="toast-spin"></div>
+  <span id="toast-msg">Buscando dados...</span>
+</div>
+
+<header>
+  <div>
+    <div class="logo">AlgoSense</div>
+    <div class="logo-sub">Análise de Algoritmos Sociais</div>
+  </div>
+  <div class="hdr-r">
+    <div class="clock-box">
+      <div id="ltime">--:--:--</div>
+      <div class="clock-date" id="ldate">--/--/----</div>
+    </div>
+    <div class="sbadge">
+      <div class="dot" id="sdot"></div>
+      <span id="stxt">AO VIVO</span>
+    </div>
+    <div class="next-upd" id="nupd">Próxima: --:--</div>
+    <button class="refresh-btn" onclick="triggerRefresh()">↻ Atualizar</button>
+  </div>
+</header>
+
+<main>
+  <div class="tabs-row">
+    <div class="tab tt active" onclick="switchTab('tiktok')">🎵 TikTok</div>
+    <div class="tab ig"        onclick="switchTab('instagram')">📸 Instagram</div>
+    <div class="tab cm"        onclick="switchTab('compare')">⚡ Comparar</div>
+    <div class="niche-wrap">
+      <span class="niche-lbl">Nicho:</span>
+      <select class="niche-sel" id="nicheSelect" onchange="triggerRefresh()">
+        <option>Entretenimento</option>
+        <option>Moda e Beleza</option>
+        <option>Fitness e Saúde</option>
+        <option>Gastronomia</option>
+        <option>Tecnologia</option>
+        <option>Finanças</option>
+        <option>Educação</option>
+        <option>Games</option>
+        <option>Lifestyle</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ═══════════ TIKTOK ═══════════ -->
+  <div class="pview active" id="pview-tiktok">
+    <div class="slbl">📊 Métricas ao vivo — TikTok</div>
+
+    <div class="g-3" id="tt-stats">
+      <div class="card"><div class="card-lbl">Taxa de Retenção</div><div class="card-val sh" style="height:46px;width:90px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:140px;margin-top:6px"></div></div>
+      <div class="card"><div class="card-lbl">Alcance FYP</div><div class="card-val sh" style="height:46px;width:80px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:120px;margin-top:6px"></div></div>
+      <div class="card"><div class="card-lbl">Horário de Pico</div><div class="card-val sh" style="height:46px;width:80px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:130px;margin-top:6px"></div></div>
+    </div>
+
+    <div class="g-2">
+      <div class="card">
+        <div class="card-lbl" style="margin-bottom:12px">Fatores do Algoritmo TikTok</div>
+        <div id="tt-factors">
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-lbl" style="margin-bottom:12px">Melhores Horários — <span id="tt-dlbl">hoje</span></div>
+        <div class="times-l" id="tt-times">
+          <div class="sh" style="height:48px;border-radius:10px;margin:8px 0"></div>
+          <div class="sh" style="height:48px;border-radius:10px;margin:8px 0"></div>
+          <div class="sh" style="height:48px;border-radius:10px;margin:8px 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hm-wrap">
+      <div class="hm-title">🔥 Mapa de Calor — Engajamento por Hora (TikTok)</div>
+      <div class="hm-sub" id="tt-hmsub">Carregando dados ao vivo — hora atual destacada em amarelo</div>
+      <div class="hm-grid" id="tt-hm"></div>
+      <div class="hm-hrs"  id="tt-hh"></div>
+      <div class="legend">
+        <div class="leg-i"><div class="leg-d" style="background:var(--tt)"></div> Alto engajamento</div>
+        <div class="leg-i"><div class="leg-d" style="background:var(--yellow)"></div> Médio</div>
+        <div class="leg-i"><div class="leg-d" style="background:var(--surface)"></div> Baixo</div>
+        <div class="leg-i"><div class="leg-d" style="outline:2px solid var(--yellow);background:transparent"></div> Hora atual</div>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div class="trend-card">
+        <div class="card-lbl" style="margin-bottom:12px">🎵 Sons em Alta (TikTok)</div>
+        <div id="tt-trending">
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+        </div>
+      </div>
+      <div class="trend-card">
+        <div class="card-lbl" style="margin-bottom:12px">🏷️ Hashtags em Alta (TikTok)</div>
+        <div id="tt-hashtags">
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slbl">🎬 Formatos de Conteúdo</div>
+    <div class="g-4" id="tt-fmts">
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+    </div>
+    <div class="card" id="tt-insight" style="margin-top:4px">
+      <div class="sh" style="height:14px;margin:6px 0"></div>
+      <div class="sh" style="height:14px;width:70%;margin:6px 0"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ INSTAGRAM ═══════════ -->
+  <div class="pview" id="pview-instagram">
+    <div class="slbl">📊 Métricas ao vivo — Instagram</div>
+
+    <div class="g-3" id="ig-stats">
+      <div class="card"><div class="card-lbl">Engajamento Médio</div><div class="card-val sh" style="height:46px;width:90px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:140px;margin-top:6px"></div></div>
+      <div class="card"><div class="card-lbl">Alcance Orgânico Reels</div><div class="card-val sh" style="height:46px;width:80px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:120px;margin-top:6px"></div></div>
+      <div class="card"><div class="card-lbl">Horário de Pico</div><div class="card-val sh" style="height:46px;width:80px">&nbsp;</div><div class="card-sub sh" style="height:14px;width:130px;margin-top:6px"></div></div>
+    </div>
+
+    <div class="g-2">
+      <div class="card">
+        <div class="card-lbl" style="margin-bottom:12px">Fatores do Algoritmo Instagram</div>
+        <div id="ig-factors">
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+          <div class="sh" style="height:14px;margin:12px 0"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-lbl" style="margin-bottom:12px">Melhores Horários — <span id="ig-dlbl">hoje</span></div>
+        <div class="times-l" id="ig-times">
+          <div class="sh" style="height:48px;border-radius:10px;margin:8px 0"></div>
+          <div class="sh" style="height:48px;border-radius:10px;margin:8px 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hm-wrap">
+      <div class="hm-title">🔥 Mapa de Calor — Engajamento por Hora (Instagram)</div>
+      <div class="hm-sub" id="ig-hmsub">Carregando dados ao vivo...</div>
+      <div class="hm-grid" id="ig-hm"></div>
+      <div class="hm-hrs"  id="ig-hh"></div>
+      <div class="legend">
+        <div class="leg-i"><div class="leg-d" style="background:var(--ig2)"></div> Alto</div>
+        <div class="leg-i"><div class="leg-d" style="background:var(--yellow)"></div> Médio</div>
+        <div class="leg-i"><div class="leg-d" style="background:var(--surface)"></div> Baixo</div>
+        <div class="leg-i"><div class="leg-d" style="outline:2px solid var(--yellow);background:transparent"></div> Hora atual</div>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div class="trend-card">
+        <div class="card-lbl" style="margin-bottom:12px">📣 Trends em Alta (Instagram)</div>
+        <div id="ig-trending">
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+        </div>
+      </div>
+      <div class="trend-card">
+        <div class="card-lbl" style="margin-bottom:12px">🏷️ Hashtags em Alta (Instagram)</div>
+        <div id="ig-hashtags">
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+          <div class="sh" style="height:13px;margin:10px 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slbl">📸 Formatos de Conteúdo</div>
+    <div class="g-4" id="ig-fmts">
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+      <div class="fmt-card sh" style="height:130px"></div>
+    </div>
+    <div class="card" id="ig-insight" style="margin-top:4px">
+      <div class="sh" style="height:14px;margin:6px 0"></div>
+      <div class="sh" style="height:14px;width:70%;margin:6px 0"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ COMPARE ═══════════ -->
+  <div class="pview" id="pview-compare">
+    <div class="slbl">⚡ TikTok vs Instagram — Comparativo</div>
+
+    <div class="cmp-t">
+      <div class="cmp-row">
+        <div class="cmp-c hd">Critério</div>
+        <div class="cmp-c hd" style="color:var(--tt2)">🎵 TikTok</div>
+        <div class="cmp-c hd" style="color:var(--ig2)">📸 Instagram</div>
+      </div>
+      <div class="cmp-row"><div class="cmp-c at">🚀 Velocidade viral</div><div class="cmp-c tv">12–48h</div><div class="cmp-c iv">3–7 dias</div></div>
+      <div class="cmp-row"><div class="cmp-c at">👤 Precisa seguidores?</div><div class="cmp-c tv" style="color:var(--green)">Não</div><div class="cmp-c iv" style="color:var(--yellow)">Parcialmente</div></div>
+      <div class="cmp-row"><div class="cmp-c at">📱 Duração ideal</div><div class="cmp-c tv">7–30s</div><div class="cmp-c iv">15–60s (Reels)</div></div>
+      <div class="cmp-row"><div class="cmp-c at">🎯 Melhor para</div><div class="cmp-c tv">Viral / Crescimento</div><div class="cmp-c iv">Comunidade / Venda</div></div>
+      <div class="cmp-row"><div class="cmp-c at">🔑 Fator #1</div><div class="cmp-c tv">Retenção</div><div class="cmp-c iv">Saves + Comentários</div></div>
+      <div class="cmp-row"><div class="cmp-c at">💰 Monetização</div><div class="cmp-c tv" style="color:var(--yellow)">Creator Fund (baixo)</div><div class="cmp-c iv" style="color:var(--green)">Melhor (Collab/Shop)</div></div>
+      <div class="cmp-row"><div class="cmp-c at">📊 Algoritmo</div><div class="cmp-c tv">Baseado em conteúdo</div><div class="cmp-c iv">Baseado em relações</div></div>
+    </div>
+
+    <div class="slbl">🕒 Horários de Pico Comparados</div>
+    <div class="g-2">
+      <div class="hm-wrap">
+        <div class="hm-title" style="color:var(--tt2)">🎵 TikTok</div>
+        <div class="hm-sub">Engajamento por hora/dia</div>
+        <div class="hm-grid" id="cmp-tt-hm"></div>
+        <div class="hm-hrs"  id="cmp-tt-hh"></div>
+      </div>
+      <div class="hm-wrap">
+        <div class="hm-title" style="color:var(--ig2)">📸 Instagram</div>
+        <div class="hm-sub">Engajamento por hora/dia</div>
+        <div class="hm-grid" id="cmp-ig-hm"></div>
+        <div class="hm-hrs"  id="cmp-ig-hh"></div>
+      </div>
+    </div>
+
+    <div class="slbl">💡 Insight Estratégico ao Vivo</div>
+    <div class="card" id="cmp-insight">
+      <div class="sh" style="height:14px;margin:8px 0"></div>
+      <div class="sh" style="height:14px;width:75%;margin:8px 0"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ AI BOX ═══════════ -->
+  <div class="ai-box">
+    <div class="ai-hdr">
+      <div class="ai-ico">🤖</div>
+      <div>
+        <div class="ai-title">Análise por IA — Estratégia em Tempo Real</div>
+        <div class="ai-sub">Powered by Claude AI + busca na web — dados atuais</div>
+      </div>
+    </div>
+    <div class="ai-row">
+      <input class="ai-in" id="aiIn" placeholder="Ex: Qual o melhor horário para postar hoje? Que tipo de Reel funciona melhor para fitness?" />
+      <button class="ai-btn" id="aiBtn" onclick="askAI()">Analisar ✨</button>
+    </div>
+    <div class="ai-out" id="aiOut">
+      <span class="thinking">💡 Pergunte sobre algoritmos, horários, trends ou estratégias de crescimento...</span>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
